@@ -2,6 +2,8 @@ package br.com.api.appac.atividadescomplementares.certificados;
 
 
 
+import java.math.BigDecimal;
+
 import br.com.api.appac.atividadescomplementares.aluno.Aluno;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,8 +26,11 @@ public class Certificados {
     private Long id;
     private String codigo;
     private String atividade;
-    private Integer pontuacao;  
+    private BigDecimal pontuacao;  
     private String caminhoArquivo;
+    private Boolean statusCorrecao = false;
+    private Boolean statusAprovado;
+    private String correcaoCoordenador;
 
     @ManyToOne
     @JoinColumn(name = "Alunos_cpf") // Coluna que representa o ID do aluno na tabela de certificados

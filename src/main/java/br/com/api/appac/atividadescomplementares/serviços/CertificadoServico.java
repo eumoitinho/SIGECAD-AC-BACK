@@ -2,6 +2,7 @@ package br.com.api.appac.atividadescomplementares.serviços;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.Optional;
@@ -20,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import br.com.api.appac.atividadescomplementares.aluno.Aluno;
 import br.com.api.appac.atividadescomplementares.certificados.Certificados;
 import br.com.api.appac.atividadescomplementares.certificados.RespostaCertificados;
+import br.com.api.appac.atividadescomplementares.repositorio.AlunoRepositorio;
 import br.com.api.appac.atividadescomplementares.repositorio.CertificadoRepositorio;
 
 @Service
@@ -27,6 +29,9 @@ public class CertificadoServico {
 
     @Autowired
     private AlunoServico as;
+
+    @Autowired
+    private AlunoRepositorio ar;
 
     @Autowired
     private CertificadoRepositorio cp;
@@ -137,6 +142,12 @@ public class CertificadoServico {
             rc.setMensagem("O certificado não pertence ao aluno informado");
             return new ResponseEntity<RespostaCertificados>(rc, HttpStatus.BAD_REQUEST);
         }
+
+        if (!certificado.get().getStatusCorrecao().equals(false)) {
+            rc.setMensagem("Não é possivel apagar um certificado já corrigido!");
+            return new ResponseEntity<RespostaCertificados>(rc, HttpStatus.BAD_REQUEST);
+        }
+
 
         cp.deleteById(certificadoId);
          // Remover o arquivo PDF associado ao certificado
