@@ -20,5 +20,12 @@ public class Semestre {
     private int ano;
     private int numeroSemestre;
     
-    // Outros atributos e relacionamentos, se necessário
+    // Esta classe "Semestre" é uma entidade JPA que representa um semestre acadêmico.
+    // A anotação "@Entity" indica que essa classe é uma entidade mapeada no banco de dados.
+    // A anotação "@Table(name = "semestre")" especifica o nome da tabela no banco de dados.
+    // Os atributos "ano" e "numeroSemestre" representam o ano e o número do semestre, respectivamente.
+    // A anotação "@Id" marca o atributo "id" como a chave primária da entidade.
+    // A anotação "@GeneratedValue(strategy = GenerationType.IDENTITY)" indica que a geração do ID será automática.
+    // As anotações "@Getter" e "@Setter" do Lombok geram automaticamente os getters e setters para os atributos.
+    // Outros atributos e relacionamentos podem ser adicionados, se necessário.
 }

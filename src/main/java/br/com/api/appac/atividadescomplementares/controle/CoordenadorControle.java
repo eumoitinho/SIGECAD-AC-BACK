@@ -1,4 +1,5 @@
 package br.com.api.appac.atividadescomplementares.controle;
+
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,34 +19,38 @@ import br.com.api.appac.atividadescomplementares.serviços.CorrecaoCertificadosS
 
 @RestController
 @CrossOrigin(origins = "*")
-
 public class CoordenadorControle {
+
     @Autowired
     CoordenadorServico cos;
 
     @Autowired
     private CorrecaoCertificadosService correcaoCertificadosService;
 
+    // Endpoint para listar informações de um coordenador
     @GetMapping("/coordenador/{cpf}")
     public Coordenador listar(@PathVariable String cpf) {
         return cos.listarcoord(cpf);
     }
 
+    // Endpoint para listar alunos de um curso
     @GetMapping("/coordenador/{cpf}/alunos/{cursoCodigo}")
     public ResponseEntity<List<Aluno>> listarAlunosDoCurso(@PathVariable String cpf, @PathVariable Long cursoCodigo) {
         List<Aluno> alunos = cos.listarAlunosDoCurso(cursoCodigo);
         return ResponseEntity.ok(alunos);
     }
 
+    // Endpoint para listar certificados de um aluno
     @GetMapping("/coordenador/{cpf}/aluno/{alunoCpf}/certificados")
     public ResponseEntity<List<Certificados>> listarCertificadosDoAluno(@PathVariable String cpf, @PathVariable String alunoCpf) {
         List<Certificados> certificados = cos.listarCertificadosDoAluno(alunoCpf);
         return ResponseEntity.ok(certificados);
     }
 
+    // Endpoint para corrigir um certificado
     @PostMapping("/corrigir")
     public ResponseEntity<String> corrigirCertificado(@RequestBody CorrecaoCertificadoRequest request) {
-    correcaoCertificadosService.corrigirCertificado(request);
-    return ResponseEntity.status(HttpStatus.OK).build();
-}
+        correcaoCertificadosService.corrigirCertificado(request);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 }
